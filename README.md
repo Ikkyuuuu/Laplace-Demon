@@ -10,6 +10,15 @@ It is designed for developers who need "True" randomness but refuse to trust a s
 
 
 
+## 🧠 The Philosophy
+In classical physics, if you know the inputs, you can predict the outputs (Determinism). This concept is known as **Laplace's Demon**. Most standard RNGs (`Math.random`) are demons: they look random, but they are mathematically predictable.
+
+**Quantum Mechanics killed the Demon.** By integrating Heisenberg's Uncertainty Principle via quantum entropy sources, this library introduces fundamental indeterminacy into your code, bridging the gap between digital systems and metaphysical reality.
+<br><br><br>
+
+
+
+
 ## 🎲 Pseudo vs. True Random
 The difference between Pseudo-Random (PRNG) and True Random (TRNG) isn't the output—it's the **predictability of the input (The Seed)**.
 
@@ -24,15 +33,6 @@ PRNGs use a mathematical algorithm (like `Math.random()`). It requires a startin
 TRNGs do not rely on linear time. They rely on **Entropy**—chaotic physical events that have no pattern.
 * **The Fix:** `Laplace Demon` doesn't care what time it is. It cares about the fluctuation of vacuum energy and atmospheric pressure.
 * **The Result:** Even if a hacker knows the exact millisecond you pressed the button, they cannot predict the outcome because they cannot predict the state of the universe at that moment.
-<br><br><br>
-
-
-
-
-## 🧠 The Philosophy
-In classical physics, if you know the inputs, you can predict the outputs (Determinism). This concept is known as **Laplace's Demon**. Most standard RNGs (`Math.random`) are demons: they look random, but they are mathematically predictable.
-
-**Quantum Mechanics killed the Demon.** By integrating Heisenberg's Uncertainty Principle via quantum entropy sources, this library introduces fundamental indeterminacy into your code, bridging the gap between digital systems and metaphysical reality.
 <br><br><br>
 
 
