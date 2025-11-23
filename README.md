@@ -11,7 +11,9 @@ It is designed for developers who need "True" randomness but refuse to trust a s
 
 
 ## 🧠 The Philosophy
-In classical physics, if you know the inputs, you can predict the outputs (Determinism). This concept is known as **Laplace's Demon**. Most standard RNGs (`Math.random`) are demons: they look random, but they are mathematically predictable.
+In classical physics, if you know the inputs, you can predict the outputs — this is Determinism. In theory, if you possessed an impossibly fast computer and knew the exact position and properties of every atom in the universe, you could calculate the entire future from the present moment. This thought experiment is known as **Laplace's Demon**. 
+
+Most standard RNGs (`Math.random`) behave just like the Demon: they appear random, but their outputs are fully determined by their initial seed.
 
 **Quantum Mechanics killed the Demon.** By integrating Heisenberg's Uncertainty Principle via quantum entropy sources, this library introduces fundamental indeterminacy into your code, bridging the gap between digital systems and metaphysical reality.
 <br><br><br>
