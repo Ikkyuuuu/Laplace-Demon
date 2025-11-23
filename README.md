@@ -77,12 +77,25 @@ Generate "Numbers Used Once" (Nonces) for Blockchain transactions and replay-att
 
 
 
+## 🌩️ Entropy Sources
+| Source                | Description                                            |
+| --------------------- | ------------------------------------------------------ |
+| **Quantum API**       | Vacuum fluctuation data (QRNG)                         |
+| **Atmospheric Noise** | Weather-based entropy (pressure, humidity, turbulence) |
+| **Hardware Noise**    | CPU timing jitter, local thermal noise                 |
+| **OS Entropy Pool**   | System randomness (e.g., `/dev/random`)                |
+
+<br><br><br>
+
+
+
 ## 📦 Installation
 
 ```bash
 npm install laplace-demon
 ```
 <br>
+
 
 
 
@@ -104,14 +117,4 @@ console.log(`True Random Value: ${n}`);
 const seed = demon.exportSeed();
 const replay = new LaplaceDemon(seed);
 ```
-<br><br><br>
-
-
-
-## 🌩️ Entropy Sources
-| Source                | Description                                            |
-| --------------------- | ------------------------------------------------------ |
-| **Quantum API**       | Vacuum fluctuation data (QRNG)                         |
-| **Atmospheric Noise** | Weather-based entropy (pressure, humidity, turbulence) |
-| **Hardware Noise**    | CPU timing jitter, local thermal noise                 |
-| **OS Entropy Pool**   | System randomness (e.g., `/dev/random`)                |
+<br>
