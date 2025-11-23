@@ -19,17 +19,17 @@ In classical physics, if you know the inputs, you can predict the outputs (Deter
 
 
 
-## 🎲 Pseudo vs. True Random
+## 🎲 Pseudo Random VS True Random
 The difference between Pseudo-Random (PRNG) and True Random (TRNG) isn't the output—it's the **predictability of the input (The Seed)**.
 
-### 1. Pseudo-Random 
+### 1. Pseudo-Random (PRNG)
 PRNGs use a mathematical algorithm (like `Math.random()`). It requires a starting number, called a **Seed**, to begin the calculation.
 * **The Flaw:** Most systems default to using **System Time** as the seed.
 * **The "Loot Box" Exploit:** Imagine a game generates a "Legendary Sword" only when the internal clock ends in `.007`.
     * If a hacker knows the seed is based on time, they can write a script to open the box at the exact millisecond required.
     * The result is not random; it is **Deterministic**. If you know the *When*, you control the *What*.
 
-### 2. True Random 
+### 2. True Random (TRNG)
 TRNGs do not rely on linear time. They rely on **Entropy**—chaotic physical events that have no pattern.
 * **The Fix:** `Laplace Demon` doesn't care what time it is. It cares about the fluctuation of vacuum energy and atmospheric pressure.
 * **The Result:** Even if a hacker knows the exact millisecond you pressed the button, they cannot predict the outcome because they cannot predict the state of the universe at that moment.
