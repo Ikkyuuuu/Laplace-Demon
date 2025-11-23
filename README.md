@@ -87,7 +87,7 @@ Generate "Numbers Used Once" (Nonces) for Blockchain transactions and replay-att
 | **Hardware Noise**    | CPU timing jitter, local thermal noise                 |
 | **OS Entropy Pool**   | System randomness (e.g., `/dev/random`)                |
 
-<br><br><br>
+<br>
 
 
 
