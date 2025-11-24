@@ -1,6 +1,6 @@
 {
   "name": "laplace-demon",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "description": "A hybrid RNG that challenges classical determinism (Laplace's Demon) by injecting True Entropy into mathematical algorithms. Aggregates Quantum Vacuum Fluctuations, Atmospheric Chaos, and CPU Thermal Noise to create an unpredictable, decentralized seed.",
   "main": "index.js",
