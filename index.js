@@ -1,6 +1,6 @@
 import axios from 'axios';
 import crypto from 'crypto';
-import { fileURLToPath } from 'url'; // 👈 REQUIRED for the smart check
+import { fileURLToPath } from 'url';
 
 /**
  * 🌌 LAPLACE DEMON
@@ -10,12 +10,15 @@ class LaplaceDemon {
     constructor(seed = null) {
         // Internal State for the generator
         this.state = 0;
+        this.seed = 0;
+        this.capturedSources = []; // Store source data so users can inspect it
 
         // If a seed is provided (Replay Mode), use it.
         // If not, we wait for init() to harvest chaos.
         if (seed) {
             this.seed = seed;
             this.state = seed;
+            this.capturedSources = ["REPLAY MODE (Saved Seed)"];
         }
     }
 
@@ -34,9 +37,6 @@ class LaplaceDemon {
      * Gathers entropy from Quantum, Weather, and Local sources.
      */
     async harvestEntropy(forceOffline) {
-        // Only log this if running in Demo mode (optional, but cleaner)
-        // console.log("👾 Demon Initializing... Harvesting Entropy...");
-
         const sources = [];
 
         // 1. LOCAL HARDWARE ENTROPY (The Safety Net)
@@ -46,6 +46,7 @@ class LaplaceDemon {
 
         if (!forceOffline) {
             // 2. REMOTE ENTROPY (Quantum + Weather)
+            // We use Promise.allSettled so one failure doesn't crash the system
             const results = await Promise.allSettled([
                 this.fetchQuantum(),
                 this.fetchWeather()
@@ -58,14 +59,15 @@ class LaplaceDemon {
             });
         }
 
-        // 3. THE ALCHEMIST (Mixing)
+        // 3. STORE DATA (So users can request it later)
+        this.capturedSources = sources;
+
+        // 4. THE ALCHEMIST (Mixing)
         this.seed = this.mixEntropy(sources);
         this.state = this.seed;
 
-        // --- NEW LOGGING LOGIC ---
-        // Only show detailed logs if this process is running directly (Demo Mode)
-        // or if you want users to see it. 
-        // For a library, usually better to keep this silent unless debugging.
+        // --- SMART LOGGING ---
+        // Only log to console if running in Demo Mode (node index.js)
         if (process.argv[1] === fileURLToPath(import.meta.url)) {
             console.log(`✨ Universe Created. Master Seed: ${this.seed}`);
             console.log(`📝 Raw Entropy Sources Captured:`);
@@ -73,7 +75,6 @@ class LaplaceDemon {
                 console.log(`   🔹 ${source}`);
             });
         }
-        // ---------------------------
     }
 
     // Source A: Australian National University (Quantum Vacuum)
@@ -83,7 +84,6 @@ class LaplaceDemon {
             const res = await axios.get(url, { timeout: 3000 });
             return `QUANTUM:${res.data.data[0]}`;
         } catch (e) {
-            // console.warn("⚠️ Quantum Uplink Failed"); // Silent fail is better for libraries
             return Promise.reject();
         }
     }
@@ -149,9 +149,16 @@ class LaplaceDemon {
     exportSeed() {
         return this.seed;
     }
+
+    /** Returns the raw array of entropy sources (CPU, Weather, Quantum) */
+    getEntropyDetails() {
+        return this.capturedSources;
+    }
 }
 
 // --- DEMO RUNNER (SMART VERSION) ---
+// This ONLY runs if you execute `node index.js` directly.
+// It does NOT run if someone imports the library.
 async function main() {
     console.log("--- 🌌 LAPLACE DEMON DEMO MODE ---");
 
@@ -169,7 +176,7 @@ async function main() {
     console.log(`🎲 Replay Float: ${futureDemon.random()} (Should match above)`);
 }
 
-// ✨ THE FIX: Only run main() if executed directly (node index.js)
+// ✨ THE SENIOR DEV TRICK: Check if this file is the main module
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
     main();
 }
