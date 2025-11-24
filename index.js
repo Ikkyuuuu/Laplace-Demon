@@ -172,6 +172,4 @@ async function main() {
     console.log(`🎲 Replay Float: ${futureDemon.random()} (Should match above)`);
 }
 
-main();
-
 export default LaplaceDemon;
