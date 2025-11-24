@@ -1,6 +1,6 @@
 {
   "name": "laplace-demon",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "**Laplace Demon** is a hybrid Random Number Generator (RNG) that challenges classical determinism. It combines **Quantum Vacuum Fluctuations** (via API) with **Atmospheric Chaos** and **Local Hardware Noise** to create a cryptographically secure, decentralized entropy pool.",
   "main": "index.js",
