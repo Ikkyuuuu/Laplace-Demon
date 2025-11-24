@@ -2,16 +2,26 @@
   "name": "laplace-demon",
   "version": "1.0.4",
   "type": "module",
-  "description": "**Laplace Demon** is a hybrid Random Number Generator (RNG) that challenges classical determinism. It combines **Quantum Vacuum Fluctuations** (via API) with **Atmospheric Chaos** and **Local Hardware Noise** to create a cryptographically secure, decentralized entropy pool.",
+  "description": "A hybrid RNG that challenges classical determinism (Laplace's Demon) by injecting True Entropy into mathematical algorithms. Aggregates Quantum Vacuum Fluctuations, Atmospheric Chaos, and CPU Thermal Noise to create an unpredictable, decentralized seed.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "rng",
+    "quantum",
+    "entropy",
+    "chaos",
+    "security",
+    "laplace-demon"
+  ],
+  "author": "Wattanun Teeratanapong",
+  "license": "MIT",
   "dependencies": {
-    "axios": "^1.13.2",
-    "laplace-demon": "^1.0.4"
+    "axios": "^1.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ikkyuuuu/Laplace-Demon.git"
   }
 }
