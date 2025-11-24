@@ -1,5 +1,6 @@
 import axios from 'axios';
 import crypto from 'crypto';
+import { fileURLToPath } from 'url'; // 👈 REQUIRED for the smart check
 
 /**
  * 🌌 LAPLACE DEMON
@@ -33,14 +34,14 @@ class LaplaceDemon {
      * Gathers entropy from Quantum, Weather, and Local sources.
      */
     async harvestEntropy(forceOffline) {
-        console.log("👾 Demon Initializing... Harvesting Entropy...");
+        // Only log this if running in Demo mode (optional, but cleaner)
+        // console.log("👾 Demon Initializing... Harvesting Entropy...");
 
         const sources = [];
 
         // 1. LOCAL HARDWARE ENTROPY (The Safety Net)
         // Uses CPU thermal noise via OS kernel
         const localEntropy = crypto.randomBytes(32).toString('hex');
-        // We truncate it to 16 chars just to keep the console clean, but full entropy is used
         sources.push(`LOCAL (CPU): ${localEntropy.substring(0, 16)}...`);
 
         if (!forceOffline) {
@@ -61,13 +62,17 @@ class LaplaceDemon {
         this.seed = this.mixEntropy(sources);
         this.state = this.seed;
 
-        console.log(`✨ Universe Created. Master Seed: ${this.seed}`);
-
-        // --- NEW LOGGING SECTION ---
-        console.log(`📝 Raw Entropy Sources Captured:`);
-        sources.forEach(source => {
-            console.log(`   🔹 ${source}`);
-        });
+        // --- NEW LOGGING LOGIC ---
+        // Only show detailed logs if this process is running directly (Demo Mode)
+        // or if you want users to see it. 
+        // For a library, usually better to keep this silent unless debugging.
+        if (process.argv[1] === fileURLToPath(import.meta.url)) {
+            console.log(`✨ Universe Created. Master Seed: ${this.seed}`);
+            console.log(`📝 Raw Entropy Sources Captured:`);
+            sources.forEach(source => {
+                console.log(`   🔹 ${source}`);
+            });
+        }
         // ---------------------------
     }
 
@@ -78,7 +83,7 @@ class LaplaceDemon {
             const res = await axios.get(url, { timeout: 3000 });
             return `QUANTUM:${res.data.data[0]}`;
         } catch (e) {
-            console.warn("⚠️ Quantum Uplink Failed (Using Local Fallback)");
+            // console.warn("⚠️ Quantum Uplink Failed"); // Silent fail is better for libraries
             return Promise.reject();
         }
     }
@@ -91,7 +96,6 @@ class LaplaceDemon {
             const chaos = res.data.current_weather.temperature + res.data.current_weather.windspeed;
             return `WEATHER:${chaos}`;
         } catch (e) {
-            console.warn("⚠️ Weather Satellite Unreachable (Using Local Fallback)");
             return Promise.reject();
         }
     }
@@ -111,7 +115,6 @@ class LaplaceDemon {
     /**
      * ⚙️ THE GENERATOR (Mulberry32)
      * A fast, high-quality PRNG. We use this instead of Math.random
-     * so we can manually control the Seed (Time Travel feature).
      */
     next() {
         let t = this.state += 0x6D2B79F5;
@@ -148,10 +151,9 @@ class LaplaceDemon {
     }
 }
 
-// --- DEMO RUNNER ---
-// This runs automatically if you execute `node index.js`
+// --- DEMO RUNNER (SMART VERSION) ---
 async function main() {
-    console.log("--- 🌌 LAPLACE DEMON DEMO ---");
+    console.log("--- 🌌 LAPLACE DEMON DEMO MODE ---");
 
     // 1. Auto-Harvest Mode
     const demon = await LaplaceDemon.create();
@@ -160,16 +162,16 @@ async function main() {
     console.log(`🎲 Random Int (1-100): ${demon.randomInt(1, 100)}`);
     console.log(`🔐 Secure Salt: ${demon.randomHex(32)}`);
 
-    // 2. Time Travel Mode (Determinism Proof)
+    // 2. Time Travel Mode
     console.log("\n--- ⏳ TESTING TIME TRAVEL ---");
     const savedSeed = demon.exportSeed();
-    console.log(`💾 Saving Seed: ${savedSeed}`);
-
     const futureDemon = new LaplaceDemon(savedSeed);
-    console.log(`🔄 Reloading Universe...`);
-
-    // These numbers should be IDENTICAL to the ones above if the math is correct
     console.log(`🎲 Replay Float: ${futureDemon.random()} (Should match above)`);
+}
+
+// ✨ THE FIX: Only run main() if executed directly (node index.js)
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    main();
 }
 
 export default LaplaceDemon;
